@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 }
 
 #Create security group with firewall rules
-resource "aws_security_group" "jenkins-sg-2022" {
+resource "aws_security_group" "default-SG" {
   name        = var.security_group
   description = "security group for Ec2 instance"
 
@@ -46,7 +46,7 @@ resource "aws_instance" "myFirstInstance" {
   ami           = var.ami_id
   key_name = var.key_name
   instance_type = var.instance_type
-  vpc_security_group_ids = [aws_security_group.jenkins-sg-2022.id]
+  vpc_security_group_ids = [aws_security_group.default-SG.sg-0cf7e6b3bbb343ed3]
   tags= {
     Name = var.tag_name
   }
@@ -55,7 +55,7 @@ resource "aws_instance" "myFirstInstance" {
 # Create Elastic IP address
 resource "aws_eip" "myFirstInstance" {
   vpc      = true
-  instance = aws_instance.myFirstInstance.id
+  instance = aws_instance.myFirstInstance.eipalloc-065e8ce1c4cd09b35
 tags= {
     Name = "my_elastic_ip"
   }
